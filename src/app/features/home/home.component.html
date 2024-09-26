@@ -1,0 +1,12 @@
+<div class="home-container">
+  <div class="header">
+    <h2>BEM VINDO!</h2>
+    <p>{{ userName }} - {{ userPosition }}</p>
+  </div>
+  <div class="categories">
+    <div class="category" *ngFor="let category of categories">
+      <p>{{ category.name }}</p>
+      <p>{{ category.accuracy }}%</p>
+    </div>
+  </div>
+</div>
