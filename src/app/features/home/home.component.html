@@ -1,12 +1,24 @@
 <div class="home-container">
+  <!-- Exibir o nome do usuário e a melhor categoria -->
   <div class="header">
-    <h2>BEM VINDO!</h2>
-    <p>{{ userName }} - {{ userPosition }}</p>
+    <h2>BEM VINDO, {{ userName }}!</h2>
+    <p>Melhor Categoria: {{ userBest }}</p>
   </div>
+
+  <!-- Listar as categorias -->
   <div class="categories">
-    <div class="category" *ngFor="let category of categories">
-      <p>{{ category.name }}</p>
-      <p>{{ category.accuracy }}%</p>
+    <h3>Categorias Disponíveis:</h3>
+    <div *ngFor="let category of categories" class="category">
+      <input
+        type="checkbox"
+        [id]="category.name"
+        (change)="toggleCategorySelection(category.name)">
+      <label [for]="category.name">{{ category.name }} - Acertos: {{ category.accuracy }}%</label>
     </div>
+  </div>
+
+  <!-- Botão para iniciar o quiz -->
+  <div class="actions">
+    <button (click)="startQuiz()">Jogar</button>
   </div>
 </div>

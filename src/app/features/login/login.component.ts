@@ -27,4 +27,8 @@ export class LoginComponent {
       this.router.navigate(['/home']);  // Assumindo que você tenha uma rota '/home' configurada
     }
   }
+
+  goToRegister() {
+    this.router.navigate(['/register']);
+  }
 }

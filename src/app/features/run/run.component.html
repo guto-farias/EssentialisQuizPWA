@@ -1,0 +1,14 @@
+<div class="run-container">
+  <h2>Questão {{ currentQuestionIndex + 1 }} de {{ totalQuestions }}</h2>
+  <p>Categoria: {{ currentQuestion?.category }}</p>
+  <p>{{ currentQuestion?.question_text }}</p>
+
+  <div class="answers">
+    <button *ngFor="let answer of getShuffledAnswers()"
+            (click)="selectedAnswer = answer">
+      {{ answer }}
+    </button>
+  </div>
+
+  <button (click)="nextQuestion()" [disabled]="!selectedAnswer">Próxima</button>
+</div>
