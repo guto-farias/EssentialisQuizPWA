@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { QuestionService } from './question.service';  // Importe o QuestionService
 import { Router } from '@angular/router';
 import { Question } from './question.model';
+import { Answer } from './question.model';
 import { ActivatedRoute } from '@angular/router';  // Importa o ActivatedRoute
 import { CommonModule } from '@angular/common';
 
@@ -29,33 +30,35 @@ export class RunComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Obter as categorias passadas como queryParams
     this.route.queryParams.subscribe((params: any) => {
       const categories = params['categories'];
-      this.selectedCategories = categories ? categories.split(',') : [];
-      console.log('Categorias recebidas:', this.selectedCategories);
+      this.selectedCategories = categories ? categories.split(',').map(Number) : [];
+      console.log('Categorias selecionadas (depois da conversão):', this.selectedCategories);
 
       if (this.selectedCategories.length > 0) {
-        this.loadQuestions(this.selectedCategories);  // Passe o parâmetro correto aqui
+        this.loadQuestions(this.selectedCategories);  // Agora passa os IDs numéricos
       }
     });
   }
 
   // Carregar perguntas com base nas categorias selecionadas
   async loadQuestions(selectedCategories: string[]): Promise<void> {
-    this.questions = await this.questionService.getQuestionsForRun(selectedCategories, 5);
-    console.log('Perguntas recebidas nessa merda:', this.questions); // Verifica o formato dos dados
+    const numericCategories = selectedCategories.map(Number); // Converte os IDs das categorias para números
+    this.questions = await this.questionService.getQuestionsForRun(numericCategories, 5);
+    //console.log('Perguntas recebidas:', this.questions);  // Verifique as perguntas recebidas
+    /*this.questions.forEach((question, index) => {
+      console.log(`Pergunta ${index + 1}:`, question);
+      console.log(`Alternativas para a pergunta ${index + 1}:`, question.answers);
+    });*/
     this.totalQuestions = this.questions.length;
     this.currentQuestion = this.questions[this.currentQuestionIndex];
-
-    if (this.currentQuestion) {
-      console.log('Alternativas erradas:', this.currentQuestion.wrong_answers);
-    }
   }
+
+
 
   // Lógica da próxima questão
   nextQuestion(): void {
-    if (this.selectedAnswer === this.currentQuestion?.correct_answer) {
+    if (this.selectedAnswer === this.currentQuestion?.answers.find(a => a.is_correct)?.answer) {
       this.correctAnswers++;
     }
 
@@ -70,27 +73,28 @@ export class RunComponent implements OnInit {
     }
   }
 
-
   getShuffledAnswers(): string[] {
-    if (!this.currentQuestion) {
+    if (!this.currentQuestion || !this.currentQuestion.answers || this.currentQuestion.answers.length === 0) {
+      console.log('Nenhuma resposta disponível ou estrutura de dados incorreta:', this.currentQuestion);
       return [];
     }
 
-    // Log para verificar as alternativas antes de embaralhar
-    console.log('Respostas antes de embaralhar:', {
-      correct: this.currentQuestion.correct_answer,
-      wrong: this.currentQuestion.wrong_answers,
-    });
+    const correctAnswer = this.currentQuestion.answers.find((a: Answer) => a.is_correct)?.answer || '';
+    const wrongAnswers = this.currentQuestion.answers
+      .filter((a: Answer) => !a.is_correct)
+      .map((a: Answer) => a.answer);
 
-    // Combina a resposta correta e as erradas, que agora sempre serão um array
-    const allAnswers = [this.currentQuestion.correct_answer, ...this.currentQuestion.wrong_answers];
+    console.log('Resposta correta:', correctAnswer);
+    console.log('Respostas erradas:', wrongAnswers);
 
-    // Embaralha as respostas
-    const shuffledAnswers = allAnswers.sort(() => Math.random() - 0.5);
+    if (!correctAnswer || wrongAnswers.length === 0) {
+      console.error('Erro: Respostas não encontradas corretamente.');
+      return [];
+    }
 
-    console.log('Respostas embaralhadas:', shuffledAnswers);  // Log para verificar as respostas embaralhadas
-
-    return shuffledAnswers;
+    // Embaralha e retorna as respostas
+    const sAnswers = [correctAnswer, ...wrongAnswers]
+    return sAnswers;
   }
 
 

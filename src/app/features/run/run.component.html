@@ -1,7 +1,8 @@
 <div class="run-container">
   <h2>Questão {{ currentQuestionIndex + 1 }} de {{ totalQuestions }}</h2>
-  <p>Categoria: {{ currentQuestion?.category }}</p>
-  <p>{{ currentQuestion?.question_text }}</p>
+  <!-- Corrigido para acessar o nome da categoria corretamente -->
+  <!-- Corrigido para usar o campo 'question' ao invés de 'question_text' -->
+  <p>{{ currentQuestion?.question }}</p>
 
   <div class="answers">
     <button *ngFor="let answer of getShuffledAnswers()"

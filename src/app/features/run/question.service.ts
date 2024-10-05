@@ -1,54 +1,54 @@
 import { SupabaseService } from '../../core/supabase.service';
-import { Question } from './question.model';
 import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class QuestionService {
-  constructor(private supabase: SupabaseService) {}
+  constructor(private supabaseService: SupabaseService) {}
 
-  async getQuestionsForRun(categories: string[], limit: number): Promise<Question[]> {
-    const supabase = this.supabase.getSupabaseClient();  // Obtenha o cliente Supabase
+  async getQuestionsForRun(selectedCategories: number[], limit: number) {
+    const supabase = this.supabaseService.getSupabaseClient();
 
     const { data, error } = await supabase
-      .from('questions')
-      .select('*')
-      .in('category', categories)
+      .from('question')
+      .select(`
+        id,
+        question,
+        category_id,
+        answers (
+          id,
+          question_id,
+          answer,
+          is_correct
+        )
+      `)
+      .in('category_id', selectedCategories)
       .limit(limit);
 
     if (error) {
-      console.error('Erro ao buscar as perguntas:', error);
-      throw new Error('Erro ao buscar as perguntas.');
+      console.error('Erro ao buscar perguntas:', error);
+      return [];
     }
 
-    console.log('Perguntas recebidas:', data);  // Log para verificar os dados retornados
-
-    // Garante que o campo 'wrong_answers' seja um array
-    return data.map((question: any) => {
-      const parsedWrongAnswers = this.parseWrongAnswers(question.wrong_answers);
-      console.log('Alternativas erradas parseadas:', parsedWrongAnswers);  // Log para verificar as alternativas erradas
-      return {
-        ...question,
-        wrong_answers: parsedWrongAnswers
-      };
-    });
-  }
-
-  // Função para tratar e garantir que wrong_answers seja um array
-  private parseWrongAnswers(wrongAnswers: any): string[] {
-    // Se for uma string, tenta converter de JSON
-    if (typeof wrongAnswers === 'string') {
-      try {
-        return JSON.parse(wrongAnswers);
-      } catch (error) {
-        console.error('Erro ao parsear wrong_answers:', error);
-        return [];
-      }
+    if (!data) {
+      console.error('Nenhuma pergunta encontrada');
+      return [];
     }
 
-    // Se já for um array, retorna como está
-    return Array.isArray(wrongAnswers) ? wrongAnswers : [];
+    //console.log('Dados brutos recebidos do Supabase:', data);
+
+    // Verifica se há respostas disponíveis para cada pergunta
+    return data.map(q => ({
+      id: q.id,
+      question: q.question,
+      category_id: q.category_id,
+      answers: q.answers ? q.answers.map(a => ({
+        id: a.id,
+        question_id: a.question_id,
+        answer: a.answer,
+        is_correct: a.is_correct
+      })) : []  // Certifica-se de que 'answers' não seja nulo
+    }));
   }
 }
-

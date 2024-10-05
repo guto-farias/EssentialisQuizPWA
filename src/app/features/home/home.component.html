@@ -7,18 +7,16 @@
 
   <!-- Listar as categorias -->
   <div class="categories">
-    <h3>Categorias Disponíveis:</h3>
-    <div *ngFor="let category of categories" class="category">
-      <input
-        type="checkbox"
-        [id]="category.name"
-        (change)="toggleCategorySelection(category.name)">
-      <label [for]="category.name">{{ category.name }} - Acertos: {{ category.accuracy }}%</label>
+    <h2>Selecione as categorias:</h2>
+    <div *ngFor="let category of categories">
+      <!-- Alterado 'name' para 'category' -->
+      <input type="checkbox" [id]="category.id" (change)="toggleCategorySelection(category.id)">
+      <label [for]="category.id">{{ category.category }}</label>
     </div>
   </div>
 
-  <!-- Botão para iniciar o quiz -->
-  <div class="actions">
-    <button (click)="startQuiz()">Jogar</button>
+  <div>
+    <button (click)="startQuiz()">Iniciar Quiz</button>
   </div>
+
 </div>

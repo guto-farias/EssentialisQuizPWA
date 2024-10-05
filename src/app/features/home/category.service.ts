@@ -1,69 +1,52 @@
 import { Injectable } from '@angular/core';
-import { SupabaseService } from '../../core/supabase.service';  // Supabase centralizado
+import { SupabaseService } from '../../core/supabase.service';
 import { Category } from './category.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CategoryService {
-  constructor(private supabaseService: SupabaseService) { }
+  constructor(private supabaseService: SupabaseService) {}
 
-  // Método para buscar categorias fixas e desempenho do usuário
   async getCategoriesWithUserStats(): Promise<Category[]> {
-    const supabase = this.supabaseService.getSupabaseClient();
+    const supabase = this.supabaseService.getSupabaseClient();  // Obtenha o client
 
-    // Obter a sessão e o user_id
-    const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+    const { data: categories, error } = await supabase
+      .from('category')  // Use o client Supabase
+      .select(`
+        id,
+        category
+      `);
 
-    if (sessionError || !sessionData?.session?.user) {
-      console.error('Erro ao buscar a sessão ou usuário não autenticado:', sessionError?.message);
+    if (error) {
+      console.error('Erro ao buscar categorias:', error);
       return [];
     }
 
-    const userId = sessionData.session.user.id;
-    console.log('Usuário ID:', userId);  // Verifica se o ID do usuário está correto
-
-    // Buscar as categorias fixas
-    const { data: categories, error: categoryError } = await supabase
-      .from('categories')
-      .select('id, name');
-
-    if (categoryError || !categories) {
-      console.error('Erro ao buscar categorias fixas:', categoryError?.message);
-      return [];
-    }
-
-    console.log('Categorias carregadas:', categories);  // Verifica se as categorias foram carregadas
-
-    // Buscar as estatísticas do usuário para cada categoria
+    // Defina o tipo correto para userStats
     const { data: userStats, error: userStatsError } = await supabase
       .from('user_category_stats')
-      .select('category_id, total_questions, correct_answers')
-      .eq('user_id', userId);
+      .select('category_id, total_questions, correct_answers');
 
-    if (userStatsError || !userStats) {
-      console.error('Erro ao buscar desempenho do usuário:', userStatsError?.message);
+    if (userStatsError) {
+      console.error('Erro ao buscar estatísticas dos usuários:', userStatsError);
       return [];
     }
 
-    console.log('Estatísticas do usuário carregadas:', userStats);  // Verifica se as estatísticas foram carregadas
-
-    // Combinar categorias fixas com as estatísticas do usuário
-    const categoriesWithStats: Category[] = categories.map((category: any) => {
-      const stats = userStats.find((stat: any) => stat.category_id === category.id) || { total_questions: 0, correct_answers: 0 };
-      const accuracy = stats.total_questions > 0
+    // Mapeamento com tipos definidos
+    const categoriesWithStats: Category[] = categories.map((category: { id: number; category: string }) => {
+      const stats = userStats.find((stat: { category_id: number }) => stat.category_id === category.id);
+      const accuracy = stats
         ? (stats.correct_answers / stats.total_questions) * 100
         : 0;
 
       return {
-        name: category.name,
-        accuracy: parseFloat(accuracy.toFixed(2))  // Formatar para 2 casas decimais
+        id: category.id,
+        category: category.category,  // Corrigido para 'category'
+        accuracy: accuracy,
       };
     });
 
-    console.log('Categorias com estatísticas:', categoriesWithStats);  // Verifica o resultado final
     return categoriesWithStats;
   }
-
-
 }
