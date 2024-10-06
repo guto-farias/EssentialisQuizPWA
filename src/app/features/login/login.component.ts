@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   standalone: true,  // Se este componente for standalone
   imports: [FormsModule, CommonModule],  // Certifique-se de importar FormsModule aqui
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   email!: string;

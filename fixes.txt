@@ -1,0 +1,4 @@
+[] multiple goTrueClient
+[] username / user table
+[] accuracy interferencia entre users diferentes
+[] mostrar categoria da questao específica

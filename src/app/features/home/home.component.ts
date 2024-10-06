@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
   userName: string = '';
@@ -80,30 +80,44 @@ export class HomeComponent implements OnInit {
     }
 
     let maxAccuracy = -1;
-    let bestCategories: string[] = [];
+    let bestCategory: string | null = null;
+    let categoryStatsMap = new Map<number, { totalQuestions: number, correctAnswers: number }>();
 
+    // Acumular os dados de cada categoria
     this.userStats.forEach(stat => {
-      const accuracy = (stat.correct_answers / stat.total_questions) * 100;
+      if (stat.total_questions > 0) {
+        if (!categoryStatsMap.has(stat.category_id)) {
+          categoryStatsMap.set(stat.category_id, { totalQuestions: 0, correctAnswers: 0 });
+        }
+
+        let currentStats = categoryStatsMap.get(stat.category_id)!;
+        currentStats.totalQuestions += stat.total_questions;
+        currentStats.correctAnswers += stat.correct_answers;
+        categoryStatsMap.set(stat.category_id, currentStats);
+      }
+    });
+
+    // Agora calcular a acurácia baseada nas estatísticas acumuladas
+    categoryStatsMap.forEach((stats, categoryId) => {
+      const accuracy = (stats.correctAnswers / stats.totalQuestions) * 100;
+      console.log('Acurácia acumulada para a categoria:', categoryId, 'é:', accuracy);
+
       if (accuracy > maxAccuracy) {
         maxAccuracy = accuracy;
-        const category = this.categories.find(c => c.id === stat.category_id);
+        const category = this.categories.find(c => c.id === categoryId);
         if (category) {
-          bestCategories = [category.category];  // Corrigido para usar o nome da categoria
-        }
-      } else if (accuracy === maxAccuracy) {
-        const category = this.categories.find(c => c.id === stat.category_id);
-        if (category) {
-          bestCategories.push(category.category);
+          bestCategory = category.category;
         }
       }
     });
 
-    if (bestCategories.length === 1) {
-      this.userBest = bestCategories[0];
-    } else {
-      this.userBest = 'Sem domínio';
-    }
+    // Define a melhor categoria ou "Sem domínio"
+    this.userBest = bestCategory ? bestCategory : 'Sem domínio';
+
+    // Exibe o resultado final
+    console.log('Melhor categoria com acurácia máxima:', this.userBest, 'com acurácia de:', maxAccuracy);
   }
+
 
   // Função para selecionar ou desselecionar categorias
   toggleCategorySelection(categoryId: number): void {
@@ -125,5 +139,13 @@ export class HomeComponent implements OnInit {
       console.log('Iniciando quiz com os IDs das categorias:', selectedCategoryIds);
       this.router.navigate(['/run'], { queryParams: { categories: selectedCategoryIds.join(',') } });
     }
+  }
+
+  goToHome() {
+    this.router.navigate(['/home']);
+  }
+
+  goToConfig() {
+    this.router.navigate(['/config']);
   }
 }

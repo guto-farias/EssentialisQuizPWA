@@ -1,22 +1,59 @@
-<div class="home-container">
-  <!-- Exibir o nome do usuário e a melhor categoria -->
-  <div class="header">
-    <h2>BEM VINDO, {{ userName }}!</h2>
-    <p>Melhor Categoria: {{ userBest }}</p>
-  </div>
+<html>
+  <header>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Font Awesome -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </header>
+  <body>
+    <div class="home-container">
+      <div class="header">
+        <i class="fa fa-user"></i> <!-- Ícone do usuário -->
+        <a (click) = "goToConfig()">
+          <i class="fa fa-bars"></i> <!-- Ícone de Home -->
+        </a>
+      </div>
+      <div class="welcome">
+        <p>BEM VINDO!</p>
+      </div>
+      <!-- Exibir o nome do usuário e a melhor categoria -->
+      <div class="profile-info">
+        <img src="assets/login_avatar.png" alt="Avatar">
+        <div class="profile-card">
+          <div class="name">
+              <h3>{{ userName }}</h3>
+          </div>
+          <div class="domain">
+              <p>MELHOR DOMÍNIO: </p>
+          </div>
+              <p>{{ userBest }}</p>
+        </div>
+      </div>
 
-  <!-- Listar as categorias -->
-  <div class="categories">
-    <h2>Selecione as categorias:</h2>
-    <div *ngFor="let category of categories">
-      <!-- Alterado 'name' para 'category' -->
-      <input type="checkbox" [id]="category.id" (change)="toggleCategorySelection(category.id)">
-      <label [for]="category.id">{{ category.category }}</label>
+      <!-- Listar as categorias -->
+      <div class="categories-container">
+        <div class="categories">
+          <div *ngFor="let category of categories">
+            <label class="category-item">
+              <input type="checkbox" [id]="category.id" (change)="toggleCategorySelection(category.id)">
+              <label [for]="category.id">{{ category.category }}</label>
+            </label>
+          </div>
+        </div>
+        <label class="last-item">
+          <p></p>
+        </label>
+      </div>
+
+      <div class="footer">
+        <button class="btn-start" (click)="startQuiz()">INICIAR JOGO!</button>
+
+        <div class="footer-menu">
+          <a (click) = "goToHome()">
+            <i class="fa fa-home"></i> <!-- Ícone de Home -->
+          </a>
+          <i class="fa fa-crown"></i> <!-- Outro ícone qualquer -->
+        </div>
+      </div>
     </div>
-  </div>
+  </body>
+</html>
 
-  <div>
-    <button (click)="startQuiz()">Iniciar Quiz</button>
-  </div>
-
-</div>

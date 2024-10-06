@@ -1,0 +1,111 @@
+/* Estilos da tela de login */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #282828;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+  max-width: 450px; /* Limita o tamanho em dispositivos grandes */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.avatar img {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 20px;
+  margin-top: 90px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-group {
+  position: relative; /* Necessário para posicionar o ícone */
+  display: flex;
+  align-items: center;
+  background-color: #d9d9d9;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.input-group input {
+  border: none;
+  background: none;
+  outline: none;
+  width: 100%;
+  font-size: 16px;
+  color: #858585;
+  padding-left: 35px; /* Espaço para o ícone */
+}
+
+.input-group i {
+  position: absolute;
+  left: 15px;
+  color: #a9a9a9;
+  font-size: 18px;
+}
+
+.forgot-password {
+  margin-bottom: 20px;
+}
+
+.forgot-password a {
+  color: #a9a9a9;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 25px;
+  margin-top: 200px;
+}
+
+.btn-login, .btn-register {
+  width: 100%;
+  max-width: 190px;
+  padding: 15px 30px;
+  margin-bottom: 16px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-login {
+  background-color: #4a966a;
+  color: white;
+}
+
+.btn-register {
+  background-color: #d9d9d9;
+  color: #858585;
+  margin-bottom: 90px;
+}

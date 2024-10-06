@@ -36,14 +36,13 @@ export class CategoryService {
     // Mapeamento com tipos definidos
     const categoriesWithStats: Category[] = categories.map((category: { id: number; category: string }) => {
       const stats = userStats.find((stat: { category_id: number }) => stat.category_id === category.id);
-      const accuracy = stats
+      const accuracy = stats && stats.total_questions > 0
         ? (stats.correct_answers / stats.total_questions) * 100
         : 0;
 
       return {
-        id: category.id,
-        category: category.category,  // Corrigido para 'category'
-        accuracy: accuracy,
+        ...category,  // Retorna todas as propriedades da categoria
+        accuracy,     // Adiciona a propriedade accuracy ao objeto retornado
       };
     });
 

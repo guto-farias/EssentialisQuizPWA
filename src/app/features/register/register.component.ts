@@ -9,7 +9,7 @@ import { AuthService } from '../../core/auth.service';  // O caminho pode variar
   standalone: true,
   imports: [FormsModule, CommonModule],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
   userName!: string;

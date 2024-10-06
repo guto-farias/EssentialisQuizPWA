@@ -1,15 +1,38 @@
 <!-- src/app/features/login/login.component.html -->
-<div class="login-container">
-  <form (submit)="onSignIn()">
-    <label for="email">Email:</label>
-    <input type="email" [(ngModel)]="email" name="email" required>
+ <html>
+  <header>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </header>
+  <body>
+    <div class="login-container">
+      <div class="content-wrapper">
+        <div class="avatar">
+          <img src="assets/login_avatar.png" alt="User Avatar">
+        </div>
+        <form (submit)="onSignIn()" class="login-form">
+          <div class="input-group">
+            <input type="email" id="email" placeholder="Informe seu email" [(ngModel)]="email" name="email" required/>
+            <i class="fa fa-envelope"></i> <!-- Ícone ao lado do input -->
+          </div>
 
-    <label for="password">Password:</label>
-    <input type="password" [(ngModel)]="password" name="password" required>
+          <div class="input-group">
+            <input type="password" id="password" placeholder="Informe sua senha" [(ngModel)]="password" name="password" required/>
+            <i class="fa fa-lock"></i> <!-- Ícone ao lado do input -->
+          </div>
 
-    <button type="submit">Login</button>
-    <button type="button" (click)="goToRegister()">Cadastrar</button>
+          <div class="forgot-password">
+            <a href="#">Esqueceu sua senha?</a>
+          </div>
 
-    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
-  </form>
-</div>
+          <div class="buttons">
+            <button type="submit" class="btn-login">ENTRAR</button>
+            <button type="button" class="btn-register" (click)="goToRegister()">REGISTRE-SE</button>
+          </div>
+
+          <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
