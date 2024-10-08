@@ -8,19 +8,25 @@ import { environment } from '../environments/environment';
   providedIn: 'root'
 })
 export class AuthService {
-  private supabase: SupabaseClient;
+  private static supabase: SupabaseClient; // Torna o SupabaseClient uma propriedade estática
 
   constructor() {
-    this.supabase = createClient(environment.supabaseUrl, environment.supabaseAnonKey, {
-      auth: {
-        autoRefreshToken: false,  // Atualiza o token automaticamente
-        persistSession: true,    // Mantém a sessão no armazenamento local
-        detectSessionInUrl: true, // Detecta a sessão na URL (se necessário)
-      }
-    });
+    if (!AuthService.supabase) { // Verifica se o cliente já foi criado
+      AuthService.supabase = createClient(environment.supabaseUrl, environment.supabaseAnonKey, {
+        auth: {
+          autoRefreshToken: false,
+          persistSession: true,
+          detectSessionInUrl: true,
+        }
+      });
 
       // Iniciar o processo manual de renovação de token
       this.startTokenRefresh();
+    }
+  }
+
+  private get supabase(): SupabaseClient {
+    return AuthService.supabase; // Garante que todas as instâncias usem o mesmo cliente
   }
 
   startTokenRefresh() {
@@ -29,7 +35,6 @@ export class AuthService {
 
       if (error || !data.session) {
         console.error('Nenhuma sessão ativa encontrada. Redirecionando para o login.');
-        // Redirecionar o usuário para o login ou lidar com a sessão ausente
         return;
       }
 
@@ -41,15 +46,13 @@ export class AuthService {
     }, 600000); // Atualizar o token a cada 10 minutos (600.000 ms) ou conforme necessário
   }
 
-
   // Registro de um novo usuário
   async signUp(email: string, password: string, userName: string) {
     const { data, error } = await this.supabase.auth.signUp({
       email: email,
       password: password,
       options: {
-        data: { userName: userName }// Armazena o nome de usuário nos metadados no momento do cadastro
-        //emailRedirectTo: null  // Desativa qualquer redirecionamento de e-mail
+        data: { userName: userName }
       }
     });
 
@@ -57,7 +60,7 @@ export class AuthService {
       return { error };
     }
 
-    return { data }; // Agora, não precisamos mais chamar updateUser
+    return { data };
   }
 
   async signIn(email: string, password: string) {

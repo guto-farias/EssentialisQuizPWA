@@ -10,13 +10,13 @@ export class SupabaseService {
   private supabase: SupabaseClient;
 
   constructor() {
-    this.supabase = createClient(environment.supabaseUrl, environment.supabaseAnonKey, {
-      auth: {
-        autoRefreshToken: false,
-        persistSession: true,
-        detectSessionInUrl: true
-      }
-    });
+      this.supabase = createClient(environment.supabaseUrl, environment.supabaseAnonKey, {
+        auth: {
+          autoRefreshToken: false,
+          persistSession: true,
+          detectSessionInUrl: true
+        }
+      });
   }
 
   // Função para retornar a instância do Supabase Client

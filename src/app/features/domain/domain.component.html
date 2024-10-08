@@ -1,0 +1,59 @@
+<html>
+  <header>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Font Awesome -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </header>
+
+  <body>
+    <div class="domain-container">
+      <div class="header">
+        <i class="fa fa-user"></i> <!-- Ícone de usuário -->
+        <a (click) = "goToConfig()">
+          <i class="fa fa-bars"></i> <!-- Ícone de Home -->
+        </a>
+      </div>
+
+      <div class="profile-info">
+        <img src="../assets/login_avatar.png" alt="Avatar">
+        <div class="profile-card">
+          <div class="name">
+            <h3>{{ userName }}</h3> <!-- Nome do usuário dinâmico -->
+          </div>
+          <div class="domain">
+            <p>MELHOR DOMÍNIO:</p>
+          </div>
+          <p>{{ bestDomain }}</p>
+        </div>
+      </div>
+
+      <div class="statistics-header">
+        <span>Nº DE ACERTOS</span>
+        <span>% DE ACERTOS</span>
+      </div>
+
+      <div class="statistics">
+        <div *ngFor="let stat of userStats; let i = index"
+             [ngClass]="{'green': i % 2 === 0, 'black': i % 2 !== 0}"
+             class="stat-item">
+          <span>ACERTOS {{ stat.correct_answers }} de {{ stat.total_questions}}</span>
+          <span class="stat-category">{{ stat.categoryName }}</span>
+          <span>PRECISÃO {{ stat.accuracy | number:'1.0-0' }}%</span>
+        </div>
+
+        <label class="last-item">
+          <p></p>
+        </label>
+      </div>
+
+      <div class="footer">
+          <a (click) = "goToHome()">
+            <i class="fa fa-home"></i> <!-- Ícone de Home -->
+          </a>
+          <a (click) = "goToDomain()">
+            <i class="fa fa-crown" ></i> <!-- Ícone de Home -->
+          </a>
+      </div>
+    </div>
+
+  </body>
+</html>

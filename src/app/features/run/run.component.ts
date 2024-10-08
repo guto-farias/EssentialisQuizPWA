@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 })
 export class RunComponent implements OnInit {
   questions: Question[] = [];
+  allQuestions: Question[] = [];
   currentQuestionIndex: number = 0;
   currentQuestion: Question | null = null;
   selectedAnswer: string | null = null;
@@ -58,12 +59,24 @@ export class RunComponent implements OnInit {
 
   // Carregar perguntas com base nas categorias selecionadas
   async loadQuestions(selectedCategories: string[]): Promise<void> {
-    const numericCategories = selectedCategories.map(Number); // Converte os IDs das categorias para números
-    this.questions = await this.questionService.getQuestionsForRun(numericCategories, 5);
-    //console.log('Perguntas recebidas:', this.questions);  // Verifique as perguntas recebidas
+    const numericCategories = selectedCategories.map(Number);
+    console.log('CATEGORIAS recebidas:', numericCategories); // Converte os IDs das categorias para números
+    this.allQuestions = await this.questionService.getQuestionsForRun(numericCategories, numericCategories.length*10);
+    console.log('Perguntas recebidas:', this.allQuestions);  // Verifique as perguntas recebidas
+    this.questions = this.shuffleArray(this.allQuestions).slice(0, Math.min(15, this.allQuestions.length));
+    console.log('Perguntas TRATADAS:', this.questions);
     this.totalQuestions = this.questions.length;
     this.currentQuestion = this.questions[this.currentQuestionIndex];
   }
+
+  // Função utilitária para embaralhar um array usando o algoritmo de Fisher-Yates
+private shuffleArray(array: any[]): any[] {
+  for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
 
   // Função para atualizar as estatísticas de usuário e categoria
   async updateUserCategoryStats(categoryId: number, isCorrect: boolean): Promise<void> {

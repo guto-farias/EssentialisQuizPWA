@@ -148,4 +148,8 @@ export class HomeComponent implements OnInit {
   goToConfig() {
     this.router.navigate(['/config']);
   }
+
+  goToDomain() {
+    this.router.navigate(['/domain']);
+  }
 }

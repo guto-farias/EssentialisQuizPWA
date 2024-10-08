@@ -2,3 +2,10 @@
 [] username / user table
 [] accuracy interferencia entre users diferentes
 [] mostrar categoria da questao específica
+[] tempo que a splsh screen fica ativa
+[] colocar pointer no texto do config-component
+
+[X] IMPORTANTE: ARRUMAR CATEGORIA NO DOMAIN
+
+checkpointer;
+-esta criando o token de acessibilidade porém não esta usando o css []

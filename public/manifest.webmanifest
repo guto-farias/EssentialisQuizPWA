@@ -1,8 +1,8 @@
 {
   "name": "essentialis",
   "short_name": "essentialis",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "theme_color": "#4a966a",
+  "background_color": "#282828",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",

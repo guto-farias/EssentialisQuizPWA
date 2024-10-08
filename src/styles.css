@@ -1,1 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
+/* accessibility-theme.css */
+.accessibility-theme div {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.accessibility-theme button {
+  background-color: #333;
+  color: #fff;
+}
+
+.accessibility-theme span {
+  color: #000000;
+}
+
+.accessibility-theme a {
+  color: #8f1313;
+}
+
+.accessibility-theme i {
+  color: #8f1313;
+}
+
+.accessibility-theme p {
+  color: #000000;
+}
+
+.accessibility-theme h2 {
+  color: #000000;
+}

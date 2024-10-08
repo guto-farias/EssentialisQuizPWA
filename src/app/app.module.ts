@@ -6,19 +6,23 @@ import { AppComponent } from './app.component';
 // Importa os módulos necessários
 import { FormsModule } from '@angular/forms';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from './environments/environment';  // Caminho pode variar
+import { environment } from './environments/environment';
 
-// Importa os componentes Home e Login
+// Importa os componentes
 import { HomeComponent } from './features/home/home.component';
-import { LoginComponent } from './features/login/login.component'; // Importa o LoginComponent
+import { LoginComponent } from './features/login/login.component';
 import { RegisterComponent } from './features/register/register.component';
+import { ConfigComponent } from './features/config/config.component';
+import { DomainComponent } from './features/domain/domain.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    ConfigComponent,
+    DomainComponent
   ],
   imports: [
     BrowserModule,

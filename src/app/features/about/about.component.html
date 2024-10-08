@@ -1,0 +1,47 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="about-container">
+    <div class="header">
+      <a (click)="goToHome()">
+        <i class="fa fa-arrow-left"></i> <!-- Ícone de voltar -->
+      </a>
+      <a (click) = "goToConfig()">
+        <i class="fa fa-bars"></i> <!-- Ícone de Home -->
+      </a>
+    </div>
+
+    <div class="about-content">
+      <h2>Como funciona o aplicativo</h2>
+      <p>O aplicativo é uma plataforma de quiz onde você pode testar seus conhecimentos em diferentes categorias. Você escolhe uma categoria e responde a perguntas relacionadas ao tema selecionado. Quanto mais perguntas você acertar, melhor será sua pontuação e acurácia em cada domínio.</p>
+
+      <h2>Como jogar</h2>
+      <ol>
+        <li>Primeiro, faça o login ou registre-se se ainda não tiver uma conta.</li>
+        <li>Na tela inicial, selecione uma ou mais categorias de seu interesse.</li>
+        <li>Clique no botão "Iniciar" para começar o quiz.</li>
+        <li>Responda a cada pergunta escolhendo a alternativa que você acredita ser a correta.</li>
+        <li>A cada resposta certa, você ganha pontos e melhora sua precisão na categoria escolhida.</li>
+        <li>Ao final do quiz, você pode ver sua pontuação total e acurácia para cada categoria.</li>
+      </ol>
+
+      <h2>Dicas para melhorar seu desempenho</h2>
+      <ul>
+        <li>Escolha categorias que você já conhece para obter uma pontuação melhor.</li>
+        <li>Leia atentamente cada pergunta e todas as opções antes de responder.</li>
+        <li>Desafie-se constantemente e melhore seu conhecimento a cada quiz!</li>
+      </ul>
+    </div>
+
+    <div class="footer">
+      <div class="footer-menu">
+        <i class="fa fa-home" (click)="goToHome()"></i> <!-- Ícone de Home -->
+        <i class="fa fa-crown" (click)="goToDomain()"></i> <!-- Outro ícone qualquer -->
+      </div>
+    </div>
+  </div>
+</body>
+</html>
