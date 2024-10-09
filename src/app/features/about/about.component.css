@@ -44,6 +44,10 @@ ol, ul {
   padding-left: 20px;
 }
 
+.last-item p{
+  margin-bottom: 140px;
+}
+
 .footer {
   position: fixed;
   bottom: 0;

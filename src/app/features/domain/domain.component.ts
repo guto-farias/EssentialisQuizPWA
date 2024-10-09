@@ -33,11 +33,11 @@ export class DomainComponent implements OnInit {
 
     // Chamar getUserStats passando o userId para obter as estatísticas do usuário logado
     this.userStats = await this.userService.getUserStats(this.userId);
-    console.log('Estatísticas do usuário:', this.userStats);
+    //console.log('Estatísticas do usuário:', this.userStats);
 
     // Obter o melhor domínio com base nas estatísticas
     this.bestDomain = await this.userService.getBestDomain(this.userId);
-    console.log('Melhor domínio do usuário:', this.bestDomain);
+    //console.log('Melhor domínio do usuário:', this.bestDomain);
   }
 
   async loadUserData(): Promise<void> {
@@ -52,7 +52,7 @@ export class DomainComponent implements OnInit {
 
   async loadUserStats(): Promise<void> {
     this.userStats = await this.userService.getUserStats(this.userId);
-    console.log('Estatísticas do usuário carregadas:', this.userStats);
+    //console.log('Estatísticas do usuário carregadas:', this.userStats);
   }
 
   // ---------------- LINKS ----------------

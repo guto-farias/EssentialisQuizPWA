@@ -70,4 +70,10 @@ export class AuthService {
   async signOut() {
     return await this.supabase.auth.signOut();
   }
+
+   // Método para solicitar a redefinição de senha
+   //async resetPassword(email: string) {
+   // const { error } = await this.supabase.auth.resetPasswordForEmail(email);
+  //return { error };
+  //}
 }

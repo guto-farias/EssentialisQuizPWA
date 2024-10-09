@@ -1,11 +1,31 @@
+opcionais chatos
+
+[] arrumar acessibilidade (obrigatório) - iniciado
+[] arrumar splash screen (obrigatório)
+[] criar documentação (obrigatório)
 [] multiple goTrueClient
 [] username / user table
-[] accuracy interferencia entre users diferentes
-[] mostrar categoria da questao específica
+[] accuracy interferencia entre users diferentes cookies ou localStorage
 [] tempo que a splsh screen fica ativa
-[] colocar pointer no texto do config-component
+[] problema para deslogar localStorage bugado
+
+
+opcionais smalls
+
+[] mostrar categoria da questao específica
+[X] colocar pointer no texto do config-component
+[] mudar senha
+
+pós prod smalls
+
+[X] menos margin-top login-register
+[X] scroll hidden login-register
+[X] mais margin bottom domain-div-legenda
+[X] arrumar footer-menu do domain
+[X] add last-item no about e no domain
 
 [X] IMPORTANTE: ARRUMAR CATEGORIA NO DOMAIN
+[] IMPORTANTE: CRIAR TELA PRA CONGRATULATIONSSSSSSSSSSSSSSSSS
 
 checkpointer;
--esta criando o token de acessibilidade porém não esta usando o css []
+-esta criando o token de acessibilidade porém não esta usando o css [X]

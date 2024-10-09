@@ -15,6 +15,7 @@ export class LoginComponent {
   email!: string;
   password!: string;
   errorMessage: string | null = null;
+  //resetMessage: string | null = null;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -31,4 +32,19 @@ export class LoginComponent {
   goToRegister() {
     this.router.navigate(['/register']);
   }
+
+  // Novo método para solicitar a redefinição de senha
+  /*async onForgotPassword() {
+    if (!this.email) {
+      this.resetMessage = 'Por favor, informe seu email para redefinir a senha.';
+      return;
+    }
+
+    const { error } = await this.authService.resetPassword(this.email);
+    if (error) {
+      this.resetMessage = 'Erro ao enviar email de redefinição de senha. Tente novamente.';
+    } else {
+      this.resetMessage = 'Email de redefinição de senha enviado. Verifique sua caixa de entrada.';
+    }
+  }*/
 }

@@ -100,7 +100,7 @@ export class HomeComponent implements OnInit {
     // Agora calcular a acurácia baseada nas estatísticas acumuladas
     categoryStatsMap.forEach((stats, categoryId) => {
       const accuracy = (stats.correctAnswers / stats.totalQuestions) * 100;
-      console.log('Acurácia acumulada para a categoria:', categoryId, 'é:', accuracy);
+      //console.log('Acurácia acumulada para a categoria:', categoryId, 'é:', accuracy);
 
       if (accuracy > maxAccuracy) {
         maxAccuracy = accuracy;
@@ -115,7 +115,7 @@ export class HomeComponent implements OnInit {
     this.userBest = bestCategory ? bestCategory : 'Sem domínio';
 
     // Exibe o resultado final
-    console.log('Melhor categoria com acurácia máxima:', this.userBest, 'com acurácia de:', maxAccuracy);
+    //console.log('Melhor categoria com acurácia máxima:', this.userBest, 'com acurácia de:', maxAccuracy);
   }
 
 

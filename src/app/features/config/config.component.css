@@ -52,6 +52,7 @@ body {
   border-bottom: 1px solid #a9a9a9; /* Linha abaixo do texto/link */
   color: white;
   text-decoration: none;
+  cursor: pointer;
 }
 
 .config-item i {
